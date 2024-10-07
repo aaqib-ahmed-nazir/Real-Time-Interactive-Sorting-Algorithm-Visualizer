@@ -13,8 +13,8 @@ time_complexities = {
     "Merge Sort": "O(n log n)",
     "Quick Sort": "O(n log n)",
     "Heap Sort": "O(n log n)",
-    "Counting Sort": "O(n + k)",
-    "Radix Sort": "O(nk)",
+    "Counting Sort": "O(n)",
+    "Radix Sort": "O(n)",
     "Bucket Sort": "O(n^2) (worst case)",
 }
 
@@ -120,6 +120,9 @@ if st.button("Sort Now"):
     st.success("Sorting complete!")
     st.write("Sorted Array:", array)
     st.write(f"Time taken: {round((end_time - start_time) * 1000, 2)} ms")
+    
+def reset():
+    st.session_state.selection = 'Please Select'
 
-if st.button("Reset"):
-    st.experimental_rerun()
+if st.button('Reset'):
+    reset()
