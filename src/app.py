@@ -1,7 +1,6 @@
 import time
 import numpy as np
 from function import *
-import pyautogui
 import plotly.graph_objects as go
 import streamlit as st  
 
@@ -64,5 +63,8 @@ if st.button("Sort Now"):
         st.write("Sorted Array:", array) 
         st.write(f"Time taken: {round((end_time - start_time) * 1000, 2)} ms")
 
-if st.button("Reset"):
-    pyautogui.hotkey("ctrl", "F5")
+def reset():
+    st.session_state.selection = 'Please Select'
+    
+if st.button('Reset'):
+    reset()
