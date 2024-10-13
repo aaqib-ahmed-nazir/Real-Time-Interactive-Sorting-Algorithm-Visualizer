@@ -1,7 +1,9 @@
 import time
 import numpy as np
 from function import *
+import pyautogui
 import plotly.graph_objects as go
+import streamlit as st  
 
 speed_mapping = {"Slow": 0.5, "Normal": 0.2, "Fast": 0.05}
 
@@ -18,7 +20,7 @@ sorting_algorithms = {
     "Heap Sort": heap_sort,
     "Counting Sort": counting_sort,
     "Radix Sort": radix_sort,
-    "Bucket Sort": bucket_sort
+    "Bucket Sort": bucket_sort  
 }
 
 algorithm = st.selectbox("Choose a Sorting Algorithm", list(sorting_algorithms.keys()))
@@ -38,7 +40,6 @@ else:
     array = [int(i) for i in custom_array.split(",")]
 
 speed = st.select_slider("Select Sorting Speed", options=["Slow", "Normal", "Fast"], value="Normal")
-
 selected_speed = speed_mapping[speed]
 
 if st.button("Sort Now"):
@@ -46,14 +47,22 @@ if st.button("Sort Now"):
     start_time = time.time()
 
     sorting_gen = sorting_algorithms[algorithm]
+    
+    sorted_array = real_time_sorting_visualization(array, sorting_gen, algorithm, selected_speed)
 
-    real_time_sorting_visualization(array, sorting_gen, algorithm, selected_speed)
+    if sorted_array:
+        end_time = time.time()
+        
+        st.success("Sorting complete!")
+        st.write("Sorted Array:", sorted_array) 
+        st.write(f"Time taken: {round((end_time - start_time) * 1000, 2)} ms")
+        
+    elif sorted_array is None:
+        end_time = time.time()
+        
+        st.success("Sorting complete!")
+        st.write("Sorted Array:", array) 
+        st.write(f"Time taken: {round((end_time - start_time) * 1000, 2)} ms")
 
-    end_time = time.time()
-
-    st.success("Sorting complete!")
-    st.write("Sorted Array:", array)
-    st.write(f"Time taken: {round((end_time - start_time) * 1000, 2)} ms")
-
-if st.button('Reset'):
-    reset()
+if st.button("Reset"):
+    pyautogui.hotkey("ctrl", "F5")
